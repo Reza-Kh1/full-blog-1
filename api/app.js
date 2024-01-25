@@ -7,10 +7,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(helmet.xssFilter());
-app.get("/", (req, res) => {
+app.get("/api-v1", (req, res) => {
   res.send({ message: "first page" });
 });
-app.get("/users", (req, res) => {
+app.get("/api-v1/users", (req, res) => {
   const body = [
     {
       id: 1,
@@ -245,7 +245,7 @@ app.get("/users", (req, res) => {
   ];
   res.send({ data: body });
 });
-app.get("/albums", (req, res) => {
+app.get("/api-v1/albums", (req, res) => {
   const body = [
     {
       userId: 1,
@@ -340,7 +340,7 @@ app.get("/albums", (req, res) => {
   ];
   res.send({ data: body });
 });
-app.post("/todos", (req, res) => {
+app.post("/api-v1/todos", (req, res) => {
   const { name, text } = req.body;
   const body = {
     name,
@@ -348,7 +348,7 @@ app.post("/todos", (req, res) => {
   };
   res.send({ data: body });
 });
-app.use("/*", (req, res) => {
+app.use("/api-v1/*", (req, res) => {
   res.send({ message: "NotFound" });
 });
 export default app;
