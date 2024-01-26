@@ -24,7 +24,7 @@ export default function RootLayout({
             <Link href={"/albums"} className="text-gray-950 px-3 py-1 rounded-md bg-lime-100 shadow-lg">البوم ها</Link>
             <Link href={"/todo"} className="text-gray-950 px-3 py-1 rounded-md bg-lime-100 shadow-lg">دفترچه یادداشت</Link>
             <Link href={"/landing"} className="text-gray-950 px-3 py-1 rounded-md bg-lime-100 shadow-lg">لندینگ پیج</Link>
-            <Link href={"/landing2"} className="text-gray-950 px-3 py-1 rounded-md bg-lime-100 shadow-lg">not found</Link>
+            <Link href={"/gettodo"} className="text-gray-950 px-3 py-1 rounded-md bg-lime-100 shadow-lg">get todos</Link>
           </div>
         </div>
         {children}

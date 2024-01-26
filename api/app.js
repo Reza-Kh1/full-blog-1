@@ -2,8 +2,11 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import { connectDb } from "./db.js";
+import { todoModel } from "./model/index.js";
 dotenv.config();
 const app = express();
+connectDb();
 app.use(express.json());
 app.use(cors());
 app.use(helmet.xssFilter());
@@ -340,13 +343,18 @@ app.get("/api-v1/albums", (req, res) => {
   ];
   res.send({ data: body });
 });
-app.post("/api-v1/todos", (req, res) => {
+app.post("/api-v1/todos", async (req, res) => {
   const { name, text } = req.body;
+  const data = await todoModel.create({ name, text });
   const body = {
     name,
     text,
   };
   res.send({ data: body });
+});
+app.get("/api-v1/todos", async (req, res) => {
+  const data = await todoModel.findAll();
+  res.send({ data });
 });
 app.use("/api-v1/*", (req, res) => {
   res.send({ message: "NotFound" });
