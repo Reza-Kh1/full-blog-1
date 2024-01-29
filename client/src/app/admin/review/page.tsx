@@ -43,7 +43,7 @@ export default function Page() {
       comment: "its so replay 20",
       reply: id,
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/reviews/1`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/reviews/1`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function Page() {
   };
   const getData = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/reviews/admin?page=${page}&status=${status}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/reviews/admin?page=${page}&status=${status}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export default function Page() {
     setComments(gog.data);
   };
   const deleteComment = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/reviews/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/reviews/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +120,7 @@ export default function Page() {
     const body = {
       status: status ? "false" : "true",
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/reviews/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/reviews/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

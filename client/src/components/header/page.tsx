@@ -3,12 +3,12 @@ import logo from "../../../public/logo.jpg";
 import GetCategory from "./getCategory";
 import SearchBox from "./search";
 const getData = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/category`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/category`, {
     method: "GET",
     headers: {
       ContentType: "application/json",
     },
-    next: { revalidate: 10 },
+    next: { revalidate: 864000 },
   });
   return await res.json();
 };

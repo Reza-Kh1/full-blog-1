@@ -58,6 +58,6 @@ reviewsModel.belongsTo(usersModel, {
   foreignKey: "userId",
 });
 reviewsModel.hasMany(reviewsModel, { as: "reply",foreignKey:"replyId" });
-// dataBase.sync({ force: true });
-dataBase.sync();
+dataBase.sync({ force: true });
+// dataBase.sync();
 export { usersModel, postsModel, imageModel, subCategoryModel, categoryModel };

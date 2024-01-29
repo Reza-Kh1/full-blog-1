@@ -1,5 +1,14 @@
 "use client";
 import React from "react";
+export type SelectLoggin = {
+  isLogin: {
+    isLoading: Boolean;
+    error: null | Error;
+    isLogin: Boolean;
+    email: null | string;
+    name: string;
+  };
+};
 export default function LayoutAuth({
   children,
 }: {

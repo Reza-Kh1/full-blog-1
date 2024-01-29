@@ -3,7 +3,6 @@ import Link from "next/link";
 import React from "react";
 import img from "../../../public/image.png";
 import { PostBoxType } from "@/app/type";
-import NotFound from "@/app/not-found";
 export default function PostBox(props: PostBoxType) {
   return (
     <div className=" w-3/12 post-box p-2">

@@ -9,12 +9,12 @@ type PostSlugType = {
   };
 };
 const getData = async (slug: { slug: string }) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/post/${slug.slug}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/post/${slug.slug}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 10 },
+    next: { revalidate: 864000 },
   });
   if (!res.ok) {
     notFound();

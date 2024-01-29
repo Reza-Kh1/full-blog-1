@@ -25,7 +25,7 @@ export const loginUser = async (prevData: prevData, form: FormData) => {
     password,
   };
   try {
-    const data = await fetch(`${process.env.NEXT_PUBLIC_URL}/user`, {
+    const data = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

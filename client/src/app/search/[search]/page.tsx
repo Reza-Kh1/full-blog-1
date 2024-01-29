@@ -21,7 +21,7 @@ export default function Search({ params }: SearchQueryType) {
   const getData = async () => {
     if (!params.search) return;
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/post/search/${params.search}?page=${page}`
+      `${process.env.NEXT_PUBLIC_URL_API}/post/search/${params.search}?page=${page}`
     );
     if (!res.ok) {
       toast.error("مشکلی پیش آمده با ادمین تماس بگیرید");

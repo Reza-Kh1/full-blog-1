@@ -1,79 +1,81 @@
-import NextAuth from "next-auth/next";
-import CredentialsProviders from "next-auth/providers/credentials";
-
-const handler = NextAuth({
+import nextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+export const handler = nextAuth({
   providers: [
-    CredentialsProviders({
-      name: "sign up",
+    CredentialsProvider({
+      name: "وارد شوید",
       credentials: {
-        phone: { type: "text" },
-        password: { type: "password" },
-        email: { type: "text" },
-        name: { type: "password" },
+        phone: {
+          label: "phone",
+          type: "text",
+        },
+        password: {
+          label: "password",
+          type: "password",
+        },
+        name: {
+          label: "name",
+          type: "text",
+        },
+        email: {
+          label: "email",
+          type: "text",
+        },
       },
-      async authorize(credentials, req) {
-        if (!credentials?.password || !credentials?.phone) return null;
-        let url: string = ""
-        let body: {
-          phone: string
-          password: string
-          email: string | null
-          name: string | null
-        } = {
-          phone: "",
-          password: "",
-          email: "",
-          name: "",
+      async authorize(credentials: any, req) {
+        if (!credentials?.phone || !credentials?.password) return;
+        let value = {};
+        if (credentials.login === "true") {
+          value = {
+            phone: credentials?.phone,
+            password: credentials?.password,
+          };
+        } else {
+          value = {
+            phone: credentials?.phone,
+            name: credentials?.name,
+            password: credentials?.password,
+            email: credentials?.email,
+          };
         }
-        try {
-          if (credentials?.name) {
-            url = `${process.env.NEXT_PUBLIC_URL}/user`
-            body.phone = credentials.phone
-            body.email = credentials?.email
-            body.name = credentials.name
-            body.password = credentials.password
-          } else {
-            url = `${process.env.NEXT_PUBLIC_URL}/user/login`
-            body.phone = credentials.phone
-            body.password = credentials.password
-          }
-          const res = await fetch(url, {
+
+        const user = await fetch(
+          `${process.env.NEXT_PUBLIC_URL_API}/user${
+            credentials.login === "true" ? "/login" : ""
+          }`,
+          {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(body),
-          });
-          if (!res.ok) throw new Error();
-          const json = await res.json();
-          return json?.infoUser || null;
-        } catch (err) {
-          return null
+            body: JSON.stringify(value),
+          }
+        );
+        const gog = await user.json();
+        if (user.ok) {
+          if (gog.infoUser) {
+            return gog.infoUser;
+          }
         }
+        const err = gog.message
+          ? gog.message
+          : "با خطای غیر قابل پیش بینی روبرو شدیم بدبخت شدیم رفت !!!";
+        throw new Error(err);
       },
     }),
   ],
   pages: {
     signIn: "/login",
   },
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
-  session: {
-    strategy: 'jwt',
-  },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.user = user;
-      }
-      return token;
+      return { ...token, ...user };
     },
-    async session({ session, token }) {
-      if (token && token.user) {
-        session.user = token.user;
-      }
+    async session({ session, token, user }) {
+      session.user = token;
       return session;
     },
   },
+  secret: process.env.SECRET_NEXT,
 });
-
 export { handler as GET, handler as POST };

@@ -10,7 +10,7 @@ export default function Page() {
   const { slug } = useParams();
   const { data }: any = useSession();
   const getData = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/post/admin/${slug}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/post/admin/${slug}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

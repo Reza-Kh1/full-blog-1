@@ -21,12 +21,12 @@ const getData = async ({ searchParams }: PostPage) => {
   if (!searchParams.page) {
     page = 1;
   }
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/post?page=` + page, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/post?page=` + page, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 10 },
+    next: { revalidate: 86000 },
   });
   // if (!res.ok) {
   //   notFound();

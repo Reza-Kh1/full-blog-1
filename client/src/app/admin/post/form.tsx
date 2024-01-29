@@ -35,7 +35,7 @@ export default function FormPost({ edit }: FormPostType) {
     error: null,
   });
   const getCategory = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/sub-category/all`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/sub-category/all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

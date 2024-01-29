@@ -29,7 +29,7 @@ export default function SubCategory() {
   const [page, setPage] = useState<number>(1);
   const getSubCategory = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/sub-category?page=${page}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/sub-category?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -51,7 +51,7 @@ export default function SubCategory() {
     const body = {
       name,
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/sub-category/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/sub-category/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function SubCategory() {
     setShow(false);
   };
   const deleteSubCategor = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/sub-category/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/sub-category/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export default function SubCategory() {
     const value = e.target.value;
     if (value === "defualt" || !value) return;
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/sub-category/${e.target.value}/admin`,
+      `${process.env.NEXT_PUBLIC_URL_API}/sub-category/${e.target.value}/admin`,
       {
         method: "GET",
         headers: {

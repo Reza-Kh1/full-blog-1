@@ -34,7 +34,7 @@ export const postAction = async (prevData: PostType, form: FormData) => {
     imgSrc,
     status: status ? true : false,
   };
-  await fetch(`${process.env.NEXT_PUBLIC_URL}/post${id ? "/" + id : ""}`, {
+  await fetch(`${process.env.NEXT_PUBLIC_URL_API}/post${id ? "/" + id : ""}`, {
     method: id ? "PUT" : "POST",
     headers: {
       "Content-Type": "application/json",

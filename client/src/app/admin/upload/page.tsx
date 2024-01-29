@@ -5,8 +5,6 @@ import React, { useState } from "react";
 import { BsUpload } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
-import img from "../../../../public/image.png";
-import { Session } from "next-auth";
 
 export default function Page() {
   const { data }: any = useSession();
@@ -21,7 +19,7 @@ export default function Page() {
     for (let file of files) {
       formData.append("file", file);
     }
-    const res: any = await fetch(`${process.env.NEXT_PUBLIC_URL}/upload/array`, {
+    const res: any = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/upload/array`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${data?.user?.token}`,
@@ -35,7 +33,7 @@ export default function Page() {
     toast.success("عکس با موفقیت افزوده شد");
   };
   const getImage = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/upload?page=1`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/upload?page=1`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +52,7 @@ export default function Page() {
   const getMore = async (pager: number) => {
     setPage((prev) => page + 1);
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/upload?page=${pager}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/upload?page=${pager}`,
       {
         method: "GET",
         headers: {
@@ -68,7 +66,7 @@ export default function Page() {
     setImage((prev: any) => [...prev, ...images]);
   };
   const deleteImage = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/upload/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/upload/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -132,7 +130,7 @@ export default function Page() {
                 <div className="relative" key={i.id}>
                   <div className="w-[300px] h-[250px] relative">
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_URL_CLIENT}/${i.url}`}
+                      src={`${process.env.NEXT_PUBLIC_URL}/${i.url}`}
                       layout="fill"
                       objectFit="cover"
                       alt="photo"

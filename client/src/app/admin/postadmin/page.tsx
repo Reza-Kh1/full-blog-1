@@ -21,7 +21,7 @@ export default function Page() {
   const [page, setPage] = useState<number>(1);
   const getData = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/post/admin-all?page=${page}&status=${status}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/post/admin-all?page=${page}&status=${status}`,
       {
         method: "GET",
         headers: {
@@ -43,7 +43,7 @@ export default function Page() {
     setResponse(gog.data);
   };
   const deletePost = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/post/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/post/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

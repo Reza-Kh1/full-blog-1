@@ -19,7 +19,7 @@ export default function GetImage({
   const { data }: any = useSession();
   const getImage = async (id?: number) => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/upload${id ? "?page=" + id : ""}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/upload${id ? "?page=" + id : ""}`,
       {
         method: "GET",
         headers: {
@@ -69,8 +69,8 @@ export default function GetImage({
                 <div className="relative" key={i.id}>
                   <div className="w-[300px] h-[250px] relative">
                     <Image
-                      onClick={() => setImg(`${process.env.NEXT_PUBLIC_URL_CLIENT}/${i.url}`)}
-                      src={`${process.env.NEXT_PUBLIC_URL_CLIENT}/${i.url}`}
+                      onClick={() => setImg(`${process.env.NEXT_PUBLIC_URL}/${i.url}`)}
+                      src={`${process.env.NEXT_PUBLIC_URL}/${i.url}`}
                       layout="fill"
                       objectFit="cover"
                       alt="photo"

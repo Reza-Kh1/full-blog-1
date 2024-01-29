@@ -20,7 +20,7 @@ export default function AdminCategory({
   const { data }: any = useSession();
   const [show, setShow] = useState<boolean>(false);
   const deleteCategory = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/category/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/category/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function AdminCategory({
     const body = {
       name: newCategory,
     };
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/category/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/category/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -19,13 +19,13 @@ type DataCategory = {
 };
 const getData = async (slug: CategorySlugType) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/category/${slug.slug}`,
+    `${process.env.NEXT_PUBLIC_URL_API}/category/${slug.slug}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      next: { revalidate: 10 },
+      next: { revalidate: 864000 },
     }
   );
   if (!res.ok) {

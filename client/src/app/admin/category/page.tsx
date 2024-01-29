@@ -25,7 +25,7 @@ export default function Page() {
       id: Number(id) !== 0 ? id : null,
     };
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/${id ? "sub-category" : "category"}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/${id ? "sub-category" : "category"}`,
       {
         method: "POST",
         headers: {
@@ -44,7 +44,7 @@ export default function Page() {
     }
   };
   const getCategory = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/category`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/category`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

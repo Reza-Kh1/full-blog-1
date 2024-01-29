@@ -37,7 +37,7 @@ export default function EditUserAdmin({
       role,
     };    
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/user/${infoUser?.id}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/user/${infoUser?.id}`,
       {
         method: "PUT",
         headers: {

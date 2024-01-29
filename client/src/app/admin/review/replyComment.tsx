@@ -26,7 +26,7 @@ export default function ReplyComment({
         reply: info.id,
         comment: reply,
       };
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/reviews/1`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/reviews/1`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export default function ReplyComment({
         status: "true",
       };
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/reviews/${info.id}`,
+        `${process.env.NEXT_PUBLIC_URL_API}/reviews/${info.id}`,
         {
           method: "PUT",
           headers: {

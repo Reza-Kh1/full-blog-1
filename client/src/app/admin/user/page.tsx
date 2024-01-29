@@ -25,7 +25,7 @@ export default function Page() {
     };
     console.log(body);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/user`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function Page() {
   };
   const getUser = async (id?: number | null | undefined) => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/user${id ? "?page=" + id : ""}`,
+      `${process.env.NEXT_PUBLIC_URL_API}/user${id ? "?page=" + id : ""}`,
       {
         method: "GET",
         headers: {
@@ -67,7 +67,7 @@ export default function Page() {
     setUser(gog.data);
   };
   const deleteUser = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/user/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/user/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

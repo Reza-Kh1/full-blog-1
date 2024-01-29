@@ -28,7 +28,7 @@ type DataSubCategory = {
 };
 const getData = async (slug: { slug: string }) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/sub-category/` + slug.slug,
+    `${process.env.NEXT_PUBLIC_URL_API}/sub-category/` + slug.slug,
     {
       method: "GET",
       headers: {
