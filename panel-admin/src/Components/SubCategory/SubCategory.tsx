@@ -6,6 +6,7 @@ import { BiRefresh } from "react-icons/bi";
 import PostBox from "../PostBox/PostBox";
 import { PaginationType, PostBoxType } from "../../type";
 import Pagination from "../Pagination/Pagination";
+import { fetchApi } from "../Fetch/FetchApi";
 type Rows = {
   id: number;
   name: string;
@@ -19,29 +20,15 @@ type SubCategoryType = {
   rows: Rows[];
 };
 export default function SubCategory() {
-  const { data }: any = useSession();
   const [id, setId] = useState<number>();
   const [show, setShow] = useState<boolean>(false);
   const [subCategory, setSubCategory] = useState<SubCategoryType>();
   const [postBox, setPostBox] = useState<PostBoxType[]>();
   const [page, setPage] = useState<number>(1);
   const getSubCategory = async () => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/sub-category?page=${page}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-      }
-    );
-    if (!res.ok) {
-      toast.error("در بارگیری زیردسته ها مشکلی به وجود امد");
-      return;
-    }
-    const gog = await res.json();
-    setSubCategory(gog.data);
+    const data = await fetchApi({ url: `/sub-category?page=${page}`, method: "GET" })
+    if (data.error) return
+    setSubCategory(data.json.data);
   };
   const editSubCategory = async (form: FormData) => {
     const name = form.get("category") as string;
@@ -49,21 +36,8 @@ export default function SubCategory() {
     const body = {
       name,
     };
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/sub-category/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-        body: JSON.stringify(body),
-      }
-    );
-    if (!res.ok) {
-      toast.error("زیر دسته آپدیت نشد");
-      return;
-    }
+    const data = await fetchApi({ url: `/sub-category/${id}`, method: "PUT", body })
+    if (data.error) return
     toast.success("زیر دسته با موفقیت آپدیت شد");
     subCategory?.rows.forEach((i) => {
       if (i.id === id) {
@@ -73,20 +47,8 @@ export default function SubCategory() {
     setShow(false);
   };
   const deleteSubCategor = async (id: number) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/sub-category/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-      }
-    );
-    if (!res.ok) {
-      toast.error("زیر دسته حذف نشد");
-      return;
-    }
+    const data = await fetchApi({ url: `/sub-category/${id}`, method: "DELETE" })
+    if (data.error) return
     toast.success("زیر دسته با موفقیت آپدیت شد");
     const gog = subCategory?.rows.filter((i: Rows) => {
       return i.id !== id;
@@ -96,22 +58,9 @@ export default function SubCategory() {
   const getPost = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === "defualt" || !value) return;
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/sub-category/${e.target.value}/admin`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-      }
-    );
-    if (!res.ok) {
-      toast.error("در حین دریافت اطلاعات به مشکل برخوردیم");
-      return;
-    }
-    const gog = await res.json();
-    setPostBox(gog.post.rows);
+    const data = await fetchApi({ url: `/sub-category/${e.target.value}/admin`, method: "GET" })
+    if (data.error) return
+    setPostBox(data.json.post.rows);
   };
   useEffect(() => {
     getSubCategory();

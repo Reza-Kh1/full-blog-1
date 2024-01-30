@@ -76,6 +76,6 @@ export const handler = nextAuth({
       return session;
     },
   },
-  secret: process.env.SECRET_NEXT,
+  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
 });
 export { handler as GET, handler as POST };

@@ -1,56 +1,46 @@
-"use client";
-import InputLabel from "../../Components/InputLabel/InputLabel";
+// import InputLabel from "../../Components/InputLabel/InputLabel";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Category from "../../Components/Category/Category";
 import SubCategory from "../../Components/SubCategory/SubCategory";
+import { fetchApi } from "../../Components/Fetch/FetchApi";
+import { useForm } from "react-hook-form";
+import InputLabel from "../../Components/InputLabel/InputLabel";
 type categoryType = {
   id: number;
   name: string;
 };
+
 export default function CategoryPage() {
-  const { data }: any = useSession();
   const ref = useRef<HTMLFormElement>(null);
   const [category, setCategory] = useState<any>();
-  const handleAction = async (form: FormData) => {
-    const name = form.get("name");
-    const id = form.get("id");
-    if (id === "defualt" || !name) {
-      return toast.error("فیلد های لازم را پر کنید");
-    }
-    let body = {
-      name,
-      id: Number(id) !== 0 ? id : null,
-    };
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/${id ? "sub-category" : "category"}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-        body: JSON.stringify(body),
-      }
-    );
-    if (!res.ok) {
-      return toast.error("عمللیات با خطا روبرو شد");
-    }
-    toast.success("دسته افزوده شد");
-    if (!id) {
-      getCategory();
-    }
+  const {
+    register: categoryFrom,
+    handleSubmit: handleCategory,
+    formState: { errors },
+  } = useForm<categoryType>();
+  const createCategory = async (form: categoryType) => {
+    // const name = form.get("name");
+    // const id = form.get("id");
+    // if (id === "defualt" || !name) {
+    //   return toast.error("فیلد های لازم را پر کنید");
+    // }
+    // let body = {
+    //   name,
+    //   id: Number(id) !== 0 ? id : null,
+    // };
+    console.log(form);
+    // const data = await fetchApi({ url: `/${id ? "sub-category" : "category"}`, method: "POST", body })
+    // if (data.error) return
+    // toast.success("دسته افزوده شد");
+    // if (!id) {
+    //   getCategory();
+    // }
   };
   const getCategory = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/category`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${data?.user?.token}`,
-      },
-    });
-    const gog = await res.json();
-    setCategory(gog.data.rows);
+    const data = await fetchApi({ url: `/category`, method: "GET" })
+    if (data.error) return
+    setCategory(data.json.data.rows);
   };
   useEffect(() => {
     getCategory();
@@ -64,16 +54,14 @@ export default function CategoryPage() {
               <span className="text-gray-100">ساخت دسته اصلی جدید</span>
               <form
                 ref={ref}
-                action={(form) => {
-                  handleAction(form), ref.current?.reset();
-                }}
+                onSubmit={handleCategory(createCategory)}
                 className="w-8/12 mt-2"
               >
-                <InputLabel type="text" name="name" required />
-                <button
-                  type="submit"
-                  className="bg-gray-200 py-1 px-4 rounded-md mt-3 shadow-md"
-                >
+                <InputLabel {...categoryFrom('name', { required: true })}/>
+                  <input {...categoryFrom('name', { required: true })} />
+      
+                <button type="submit"
+                  className="bg-gray-200 py-1 px-4 rounded-md mt-3 shadow-md">
                   ثبت دسته اصلی
                 </button>
               </form>
@@ -90,7 +78,7 @@ export default function CategoryPage() {
               >
                 <div className="w-1/2">
                   <span className="text-gray-100">زیر دسته جدید</span>
-                  <InputLabel type="text" name="name" />
+                  {/* <InputLabel type="text" name="name" /> */}
                 </div>
                 <div className="w-5/12">
                   <label

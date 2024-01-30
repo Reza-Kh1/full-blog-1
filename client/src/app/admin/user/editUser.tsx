@@ -1,7 +1,6 @@
 "use client";
 import { EditorUsertype } from "@/app/type";
 import InputFormUser from "@/components/inputFormUser/page";
-import InputLabel from "@/components/inputLabel/page";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { GrClose } from "react-icons/gr";

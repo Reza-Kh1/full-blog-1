@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BtnLogin from "./BtnLogin";
 import { useForm } from "react-hook-form";
-import { FetcApi } from "../../Components/Fetch/FetchApi";
+import { fetchApi } from "../../Components/Fetch/FetchApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 type FormType = {
@@ -28,31 +28,48 @@ export default function Auth() {
     handleSubmit: handleSubmitLogin,
     formState: { errors: errorsLogin },
   } = useForm<FormType>();
-
   const onSignUp = async (data: signUpType) => {
     console.log(data);
+    if (data.passreply !== data.password) return
+    const body = {
+      password: data.password,
+      name: data.name,
+      phone: data.phone,
+      email: data.email
+    }
+    const datas = await fetchApi({
+      url: "/user",
+      method: "POST",
+      body: body,
+    });
+    if (datas.error) {
+      return
+    }
+    localStorage.setItem("token", datas.infoUser.token);
+    toast.success("وارد شدین")
+    navigate("/admin/dashboard");
   };
-
   const onLogin = async (data: FormType) => {
-    const datas = await FetcApi({
+    const datas = await fetchApi({
       url: "/user/login",
       method: "POST",
       body: data,
     });
+    if (datas.error) {
+      return
+    }
     localStorage.setItem("token", datas.infoUser.token);
-    console.log("وارد شدین");
     toast.success("وارد شدین")
-    navigate("/dashboard");
+    navigate("/admin/dashboard");
   };
   return (
     <>
-      <div className="w-7/12 mx-auto mt-3">
+      <div className="w-7/12 mx-auto mt-10">
         <BtnLogin value={isLogin} set={setIsLogin} />
         <div className="w-full max-w-7xl flex justify-between relative mb-5">
           <div
-            className={`bg-slate-300 transition-all transform p-3  w-[100%] py-6 text-center rounded-md absolute top-[0%] h-auto left-0 ${
-              isLogin === "login" ? "z-10" : "z-0 opacity-0"
-            }`}
+            className={`bg-slate-300 transition-all transform p-3  w-[100%] py-6 text-center rounded-md absolute top-[0%] h-auto left-0 ${isLogin === "login" ? "z-10" : "z-0 opacity-0"
+              }`}
           >
             <h3 className="mb-5 text-lg">ورود به نکس بلاگ</h3>
             <form onSubmit={handleSubmitLogin(onLogin)}>
@@ -81,9 +98,8 @@ export default function Auth() {
             </form>
           </div>
           <div
-            className={`bg-slate-300 transition-all transform w-[100%] p-3 py-6 text-center rounded-md absolute top-[0%] h-auto right-0 ${
-              isLogin === "signUp" ? "z-10" : "z-0 opacity-0"
-            }`}
+            className={`bg-slate-300 transition-all transform w-[100%] p-3 py-6 text-center rounded-md absolute top-[0%] h-auto right-0 ${isLogin === "signUp" ? "z-10" : "z-0 opacity-0"
+              }`}
           >
             <h3 className="mb-5 text-lg">ثبت نام در نکس بلاگ</h3>
             <form onSubmit={handleSubmitSignUp(onSignUp)}>

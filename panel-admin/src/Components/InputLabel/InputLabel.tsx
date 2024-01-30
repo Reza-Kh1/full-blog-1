@@ -3,7 +3,7 @@ type InputType = {
   classLabel?: string;
   required?: boolean;
   value?: string | null;
-  type:
+  type?:
   | "button"
   | "text"
   | "checkbox"
@@ -16,7 +16,7 @@ type InputType = {
   name: string;
   label?: string;
 };
-export default function InputLabel({
+export default function InputLabel(props: any, {
   classInput,
   classLabel,
   required,
@@ -38,6 +38,7 @@ export default function InputLabel({
         </label>
       )}
       <input
+        {...props}
         aria-label="d" aria-hidden="true"
         defaultValue={value ? value : ""}
         autoComplete={complete ? complete : "off"}

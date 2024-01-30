@@ -1,5 +1,4 @@
-import img from "../../../public/image.png";
-import { PostBoxType } from "../../type";
+import { PostBoxType } from "../../type"
 import { Link } from "react-router-dom";
 export default function PostBox(props: PostBoxType) {
   return (
@@ -11,7 +10,7 @@ export default function PostBox(props: PostBoxType) {
             <img
               width={250}
               height={250}
-              src={props?.imgSrc ? props?.imgSrc : img}
+              src={props?.imgSrc ? props?.imgSrc : ""}
               alt={props?.imgAlt ? props?.imgAlt : ""}
               className="rounded-lg shadow-md"
             />

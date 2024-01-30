@@ -1,9 +1,15 @@
+import { toast } from "react-toastify";
+
 type FetcApiType = {
   method: "POST" | "PUT" | "GET" | "DELETE";
   url: string;
   body?: any;
 };
-export const FetcApi = async ({ url, method, body }: FetcApiType) => {
+type ResponseApi = {
+  error?: string
+  json?: any
+}
+export const fetchApi = async ({ url, method, body }: FetcApiType): Promise<ResponseApi> => {
   const res = await fetch(import.meta.env.VITE_PUBLIC_URL_API + url, {
     method: method,
     headers: {
@@ -14,7 +20,8 @@ export const FetcApi = async ({ url, method, body }: FetcApiType) => {
   });
   const json = await res.json();
   if (!res.ok) {
-    return { message: json.message || "error" };
+    toast.error(json.message || "خطایی پیش آمد لطفا دوباره تلاش کنید!")
+    return { error: json.message || "error" };
   }
-  return json;
+  return { json };
 };

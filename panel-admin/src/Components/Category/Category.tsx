@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaTrash, FaPen } from "react-icons/fa";
 import EditCategory from "../EditCategory/EditCategory";
+import { fetchApi } from "../Fetch/FetchApi";
 type categoryType = {
   id: number;
   name: string;
@@ -14,20 +15,8 @@ export default function Category({ category, setCategory }: AdminCategoryType) {
   const [id, setId] = useState<number>();
   const [show, setShow] = useState<boolean>(false);
   const deleteCategory = async (id: number) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/category/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-      }
-    );
-    if (!res.ok) {
-      toast.error("دسته حذف نشد");
-      return;
-    }
+    const data = await fetchApi({ url: `/category/${id}`, method: "DELETE" })
+    if (data.error) return
     toast.success("دسته حذف شد");
     const newCategory = category.filter((i: categoryType) => {
       return i.id !== id;
@@ -39,21 +28,8 @@ export default function Category({ category, setCategory }: AdminCategoryType) {
     const body = {
       name: newCategory,
     };
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL_API}/category/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${data?.user?.token}`,
-        },
-        body: JSON.stringify(body),
-      }
-    );
-    if (!res.ok) {
-      toast.error("دسته ویرایش نشد");
-      return;
-    }
+    const data = await fetchApi({ url: `/category/${id}`, method: "PUT", body })
+    if (data.error) return
     toast.success("با موفقیت دسته ویرایش شد");
     category.forEach((i: categoryType) => {
       if (i.id === id) {

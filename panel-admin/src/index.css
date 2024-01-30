@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.sideBar-admin a.active::after {
+    position: absolute;
+    content: "◀️";
+    width: 5px;
+    height: 5px;
+    right: -22px;
+    top: 3px;
+}
+
+.sideBar-admin a.active {
+    background-color: rgb(113 140 233);
+    margin-right: 18px;
+    transition: all ease-in-out 0.3s;
+}
