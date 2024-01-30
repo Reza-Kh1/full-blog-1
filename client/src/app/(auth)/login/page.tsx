@@ -2,12 +2,10 @@
 import { signIn } from "next-auth/react";
 import SubmitButton from "@/components/submitButton/page";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import BtnLogin from "../btnLogin";
 export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [isLogin, setIsLogin] = useState<"signUp" | "login">("login");
-  const router = useRouter();
   const onSubmit = async (e: FormData) => {
     const passwordReply = e.get("password-reply");
     const password = e.get("password");
@@ -18,24 +16,15 @@ export default function Login() {
     const name = e.get("name");
     const email = e.get("email");
     const phone = e.get("phone");
-    const response: any = await signIn("credentials", {
+    await signIn("credentials", {
       name,
       email,
       password,
       phone,
       login: passwordReply ? false : true,
-      redirect: false,
+      redirect: true,
+      callbackUrl: "/",
     });
-    if (response?.error) {
-      const gog = response.error.split(":")[1];
-      if (gog) {
-        setError(gog);
-        return;
-      }
-      setError(response.error);
-    } else {
-      router.push("/profile");
-    }
   };
   return (
     <>

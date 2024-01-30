@@ -3,12 +3,11 @@ import { BsUpload } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import { fetchApi } from "../../Components/Fetch/FetchApi";
-
 export default function Page() {
   const [page, setPage] = useState<number>(1);
   const [image, setImage] = useState<any>([]);
   const [allPage, setAllPage] = useState<number>();
-  const [count, setCount] = useState<number>()
+  const [count, setCount] = useState<number>();
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files: any = e.target.files;
     if (!files) return;
@@ -16,27 +15,42 @@ export default function Page() {
     for (let file of files) {
       formData.append("file", file);
     }
-    const data = await fetchApi({ url: "/upload/array", method: "POST", body: formData })
-    if (data.error) return
+    const res = await fetch(
+      import.meta.env.VITE_PUBLIC_URL_API + "/upload/array",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      }
+    );
+    if (!res.ok) {
+      toast.error("عکس آپلود نشد");
+      return;
+    }
     toast.success("عکس با موفقیت افزوده شد");
   };
   const getImage = async () => {
-    const data = await fetchApi({ url: "/upload?page=1", method: "GET" })
-    if (data.error) return
+    const data = await fetchApi({ url: "/upload?page=1", method: "GET" });
+    if (data.error) return;
     setAllPage(data.json.data.pagination.allPage);
-    setCount(data.json.data.count)
+    setCount(data.json.data.count);
     setImage(data.json.data.rows);
   };
   const getMore = async (pager: number) => {
     setPage(page + 1);
-    const data = await fetchApi({ url: `/upload?page=${pager}`, method: "GET" })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/upload?page=${pager}`,
+      method: "GET",
+    });
+    if (data.error) return;
     const images = data.json.data.rows;
     setImage((prev: any) => [...prev, ...images]);
   };
   const deleteImage = async (id: number) => {
-    const data = await fetchApi({ url: `/upload/${id}`, method: "DELETE" })
-    if (data.error) return
+    const data = await fetchApi({ url: `/upload/${id}`, method: "DELETE" });
+    if (data.error) return;
     const newImage = await image.filter((i: { id: number; url: string }) => {
       return i.id !== id;
     });
@@ -72,9 +86,7 @@ export default function Page() {
         <div className="w-full mt-5 bg-slate-600 p-2 rounded-md">
           <span className="block text-gray-100 text-lg">
             نمایش عکس های آپلود شده
-            <span className="inline-block mr-1">
-              {count && count}
-            </span>
+            <span className="inline-block mr-1">{count && count}</span>
           </span>
 
           {!image.length && (
@@ -89,11 +101,11 @@ export default function Page() {
             {image &&
               image.map((i: { id: number; url: string }) => (
                 <div className="relative" key={i.id}>
-                  <div className="w-[300px] h-[250px] relative">
+                  <div className="w-[350px] h-[250px] relative">
                     <img
-                      src={`${process.env.VITE_PUBLIC_URL}/${i.url}`}
+                      src={`${import.meta.env.VITE_PUBLIC_URL}/${i.url}`}
                       alt="photo"
-                      className="rounded-md shadow-lg border border-gray-700 object-cover"
+                      className="rounded-md shadow-lg border border-gray-700 object-cover h-full w-full"
                     />
                     <span
                       onClick={() => deleteImage(i.id)}

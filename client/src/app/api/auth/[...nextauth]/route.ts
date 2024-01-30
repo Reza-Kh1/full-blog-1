@@ -3,79 +3,84 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const handler = nextAuth({
   providers: [
     CredentialsProvider({
-      name: "وارد شوید",
+      name: "login",
       credentials: {
         phone: {
-          label: "phone",
           type: "text",
         },
         password: {
-          label: "password",
           type: "password",
         },
         name: {
-          label: "name",
           type: "text",
         },
         email: {
-          label: "email",
+          type: "text",
+        },
+        login: {
           type: "text",
         },
       },
       async authorize(credentials: any, req) {
-        if (!credentials?.phone || !credentials?.password) return;
-        let value = {};
+        let body = {};
         if (credentials.login === "true") {
-          value = {
+          body = {
             phone: credentials?.phone,
             password: credentials?.password,
           };
-        } else {
-          value = {
+          const login = await fetch(
+            process.env.NEXT_PUBLIC_URL_API + "/user/login",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(body),
+            }
+          );
+          if (!login.ok) return null;
+          const gog = await login.json();
+          if (gog.infoUser) {
+            return gog.infoUser;
+          }
+          return null;
+        }
+        if (credentials.login !== "true") {
+          body = {
             phone: credentials?.phone,
             name: credentials?.name,
             password: credentials?.password,
             email: credentials?.email,
           };
-        }
-
-        const user = await fetch(
-          `${process.env.NEXT_PUBLIC_URL_API}/user${
-            credentials.login === "true" ? "/login" : ""
-          }`,
-          {
+          const user = await fetch(process.env.NEXT_PUBLIC_URL_API + "/user", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(value),
-          }
-        );
-        const gog = await user.json();
-        if (user.ok) {
+            body: JSON.stringify(body),
+          });
+          if (!user.ok) return null;
+          const gog = await user.json();
           if (gog.infoUser) {
             return gog.infoUser;
           }
+          return null;
         }
-        const err = gog.message
-          ? gog.message
-          : "با خطای غیر قابل پیش بینی روبرو شدیم بدبخت شدیم رفت !!!";
-        throw new Error(err);
       },
     }),
   ],
   pages: {
     signIn: "/login",
   },
+  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      return token;
     },
     async session({ session, token, user }) {
       session.user = token;
       return session;
     },
   },
-  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
 });
 export { handler as GET, handler as POST };

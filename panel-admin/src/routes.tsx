@@ -1,3 +1,4 @@
+import SingleEditPost from "./Components/SingleEditPost/SingleEditPost";
 import AllPost from "./pages/AllPost/AllPost";
 import Auth from "./pages/Auth/Auth";
 import CategoryPage from "./pages/Category/Category";
@@ -13,6 +14,7 @@ export default [
     path: "/admin", element: <Layout />, children: [
       { path: "dashboard", element: <Dashboard /> },
       { path: "post", element: <Post /> },
+      { path: "post/:slug", element: <SingleEditPost /> },
       { path: "all-post", element: <AllPost /> },
       { path: "user", element: <User /> },
       { path: "review", element: <Review /> },

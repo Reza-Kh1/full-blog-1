@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
 import EditUserAdmin from "../../Components/EditUser/EditUser";
-import InputFormUser from "../../Components/InputFormUser/InputFormUser";
+import InputFormUser, {
+  InputuserType,
+} from "../../Components/InputFormUser/InputFormUser";
 import { toast } from "react-toastify";
 import { EditorUsertype, UserAdminType } from "../../type";
 import { fetchApi } from "../../Components/Fetch/FetchApi";
 export default function Page() {
   const [editUser, setEditUser] = useState<EditorUsertype>();
   const [user, setUser] = useState<UserAdminType>();
-  const actions = async (form: FormData) => {
-    const name = form.get("name");
-    const phone = form.get("phone");
-    const password = form.get("password");
-    const email = form.get("email");
-    const role = form.get("role");
+  const actions = async (form: InputuserType) => {
     const body = {
-      name,
-      phone,
-      password,
-      email,
-      role,
+      name: form.name,
+      phone: form.phone,
+      password: form.password,
+      email: form.email,
+      role: form.role,
     };
-    const data = await fetchApi({ url: "/user", method: "POST", body: body })
-    if (data.error) return
+    const data = await fetchApi({ url: "/user", method: "POST", body: body });
+    if (data.error) return;
     toast.success("کاربر با موفقیت آپدیت شد");
     getUser();
   };
   const getUser = async (id?: number | null | undefined) => {
-    const data = await fetchApi({ url: `/user${id ? "?page=" + id : ""}`, method: "GET" })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/user${id ? "?page=" + id : ""}`,
+      method: "GET",
+    });
+    if (data.error) return;
     if (id && user?.rows) {
       setUser({
         ...user,
@@ -40,8 +40,8 @@ export default function Page() {
     setUser(data.json.data);
   };
   const deleteUser = async (id: number) => {
-    const data = await fetchApi({ url: `/user/${id}`, method: "DELETE" })
-    if (data.error) return
+    const data = await fetchApi({ url: `/user/${id}`, method: "DELETE" });
+    if (data.error) return;
     toast.success("کاربر با موفقیت حذف شد");
     const gog = user?.rows.filter((i) => {
       return i.id !== id;

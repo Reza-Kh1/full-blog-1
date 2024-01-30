@@ -1,16 +1,22 @@
-import InputLabel from "../InputLabel/InputLabel";
-import React from "react";
+import { useForm } from "react-hook-form";
 import { FaRegWindowClose } from "react-icons/fa";
 type EditCategoryType = {
   show: boolean;
   setShow: (vaule: boolean) => void;
   editCategory: (value: any) => void;
 };
+type EditType = {
+  category: string;
+};
 export default function EditCategory({
   show,
   editCategory,
   setShow,
 }: EditCategoryType) {
+  const { register, handleSubmit, } = useForm<EditType>();
+  const submit = (form: EditType) => {
+    editCategory(form);
+  };
   return (
     <div>
       {show && (
@@ -21,10 +27,18 @@ export default function EditCategory({
                 <FaRegWindowClose className="text-2xl cursor-pointer inline" />
               </i>
             </div>
-            <form action={editCategory}>
-              <InputLabel name="category" type="text" required />
-              <button type="submit" className="rounded-md bg-blue-400 py-1 px-4 mt-3">
-              ذخیره
+            <form onSubmit={handleSubmit(submit)}>
+              <input
+                {...register("category", { required: true })}
+                type="text"
+                autoComplete="false"
+                className="block p-2 rounded-md shadow-md bg-slate-200 mt-2 focus:shadow-blue-300 text-gray-800 w-full"
+              />
+              <button
+                type="submit"
+                className="rounded-md bg-blue-400 py-1 px-4 mt-3"
+              >
+                ذخیره
               </button>
             </form>
           </div>

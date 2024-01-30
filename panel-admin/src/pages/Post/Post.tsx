@@ -8,7 +8,7 @@ export default function Page() {
         <span className="text-gray-200 text-lg">
           مقاله جدید خودتان را بسازید
         </span>
-        <Link to={"upload"} className="text-center">
+        <Link to={"/admin/upload"} className="text-center">
           <span className="p-3 py-6 mb-2 justify-center flex border border-dashed rounded-md cursor-pointer">
             <i>
               <BsUpload className="text-[30px] text-gray-50" />

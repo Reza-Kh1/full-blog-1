@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import FormPost from "../FormPost/FormPost";
 import { postPageType } from "../../type";
 import { fetchApi } from "../Fetch/FetchApi";
+import { useParams } from "react-router-dom";
 export default function SingleEditPost() {
   const [edit, setEdit] = useState<postPageType | null>();
-  const slug = new URLSearchParams(window.location.search)
+  const { slug } = useParams();
   const getData = async () => {
-    const data = await fetchApi({ url: `/post/admin/${slug.get("slug")}`, method: "GET" })
-    if (data.error) return
+    const data = await fetchApi({ url: `/post/admin/${slug}`, method: "GET" });
+    if (data.error) return;
     setEdit(data.json.data);
   };
   useEffect(() => {

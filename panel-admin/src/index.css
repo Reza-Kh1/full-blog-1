@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'iranSans';
+    src: url('./fonts/Vazir-Regular.woff') format('woff');
+}
+
+body {
+    font-family: 'iranSans', 'YourSecondFont', Arial, Helvetica, sans-serif !important;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    background-color: rgb(21, 21, 21);
+}
+
+a {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
 .sideBar-admin a.active::after {
     position: absolute;
     content: "◀️";

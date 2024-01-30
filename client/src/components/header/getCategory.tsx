@@ -38,20 +38,6 @@ export default function GetCategory({ category }: getCategory) {
           بلاگ
         </Link>
       </li>
-      {data?.user?.role === "ADMIN" && (
-        <li>
-          <Link
-            href={"/admin"}
-            className={`transition-all cursor-pointer ${
-              path === "/admin" || path === "/login"
-                ? "text-white"
-                : " text-slate-800"
-            }`}
-          >
-            پنل ادمین
-          </Link>
-        </li>
-      )}
       {data ? (
         <li>
           <Link

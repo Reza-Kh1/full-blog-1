@@ -15,25 +15,28 @@ export default function Category({ category, setCategory }: AdminCategoryType) {
   const [id, setId] = useState<number>();
   const [show, setShow] = useState<boolean>(false);
   const deleteCategory = async (id: number) => {
-    const data = await fetchApi({ url: `/category/${id}`, method: "DELETE" })
-    if (data.error) return
+    const data = await fetchApi({ url: `/category/${id}`, method: "DELETE" });
+    if (data.error) return;
     toast.success("دسته حذف شد");
     const newCategory = category.filter((i: categoryType) => {
       return i.id !== id;
     });
     setCategory(newCategory);
   };
-  const editCategory = async (form: FormData) => {
-    const newCategory = form.get("category") as string;
+  const editCategory = async (form: { category: string }) => {
     const body = {
-      name: newCategory,
+      name: form.category,
     };
-    const data = await fetchApi({ url: `/category/${id}`, method: "PUT", body })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/category/${id}`,
+      method: "PUT",
+      body,
+    });
+    if (data.error) return;
     toast.success("با موفقیت دسته ویرایش شد");
     category.forEach((i: categoryType) => {
       if (i.id === id) {
-        i.name = newCategory;
+        i.name = form.category;
       }
     });
     setShow(false);

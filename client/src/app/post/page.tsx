@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import React from "react";
 import { PaginationType, postPageType } from "../type";
 import Image from "next/image";
@@ -28,9 +27,6 @@ const getData = async ({ searchParams }: PostPage) => {
     },
     next: { revalidate: 86000 },
   });
-  // if (!res.ok) {
-  //   notFound();
-  // }
   const data = await res.json();
   return data;
 };

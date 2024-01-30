@@ -26,29 +26,37 @@ export default function SubCategory() {
   const [postBox, setPostBox] = useState<PostBoxType[]>();
   const [page, setPage] = useState<number>(1);
   const getSubCategory = async () => {
-    const data = await fetchApi({ url: `/sub-category?page=${page}`, method: "GET" })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/sub-category?page=${page}`,
+      method: "GET",
+    });
+    if (data.error) return;
     setSubCategory(data.json.data);
   };
-  const editSubCategory = async (form: FormData) => {
-    const name = form.get("category") as string;
-    if (!name) return;
+  const editSubCategory = async (form: { category: string }) => {
     const body = {
-      name,
+      name: form.category,
     };
-    const data = await fetchApi({ url: `/sub-category/${id}`, method: "PUT", body })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/sub-category/${id}`,
+      method: "PUT",
+      body,
+    });
+    if (data.error) return;
     toast.success("زیر دسته با موفقیت آپدیت شد");
     subCategory?.rows.forEach((i) => {
       if (i.id === id) {
-        i.name = name;
+        i.name = form.category;
       }
     });
     setShow(false);
   };
   const deleteSubCategor = async (id: number) => {
-    const data = await fetchApi({ url: `/sub-category/${id}`, method: "DELETE" })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/sub-category/${id}`,
+      method: "DELETE",
+    });
+    if (data.error) return;
     toast.success("زیر دسته با موفقیت آپدیت شد");
     const gog = subCategory?.rows.filter((i: Rows) => {
       return i.id !== id;
@@ -58,8 +66,11 @@ export default function SubCategory() {
   const getPost = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     if (value === "defualt" || !value) return;
-    const data = await fetchApi({ url: `/sub-category/${e.target.value}/admin`, method: "GET" })
-    if (data.error) return
+    const data = await fetchApi({
+      url: `/sub-category/${e.target.value}/admin`,
+      method: "GET",
+    });
+    if (data.error) return;
     setPostBox(data.json.post.rows);
   };
   useEffect(() => {
