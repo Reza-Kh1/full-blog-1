@@ -16,12 +16,13 @@ export default function Login() {
     const name = e.get("name");
     const email = e.get("email");
     const phone = e.get("phone");
+    const login = passwordReply ? false : true
     await signIn("credentials", {
       name,
       email,
       password,
       phone,
-      login: passwordReply ? false : true,
+      login,
       redirect: true,
       callbackUrl: "/",
     });
@@ -31,9 +32,8 @@ export default function Login() {
       <BtnLogin value={isLogin} set={setIsLogin} />
       <div className="w-full max-w-7xl flex justify-between relative mb-5">
         <div
-          className={`bg-slate-300 transition-all transform p-3  w-[100%] py-6 text-center rounded-md absolute top-[0%] h-auto left-0 ${
-            isLogin === "login" ? "z-10" : "z-0 opacity-0"
-          }`}
+          className={`bg-slate-300 transition-all transform p-3  w-[100%] py-6 text-center rounded-md absolute top-[0%] h-auto left-0 ${isLogin === "login" ? "z-10" : "z-0 opacity-0"
+            }`}
         >
           <h3 className="mb-5 text-lg">ورود به نکس بلاگ</h3>
           {error && (
@@ -64,9 +64,8 @@ export default function Login() {
           </form>
         </div>
         <div
-          className={`bg-slate-300 transition-all transform w-[100%] p-3 py-6 text-center rounded-md absolute top-[0%] h-auto right-0 ${
-            isLogin === "signUp" ? "z-10" : "z-0 opacity-0"
-          }`}
+          className={`bg-slate-300 transition-all transform w-[100%] p-3 py-6 text-center rounded-md absolute top-[0%] h-auto right-0 ${isLogin === "signUp" ? "z-10" : "z-0 opacity-0"
+            }`}
         >
           <h3 className="mb-5 text-lg">ثبت نام در نکس بلاگ</h3>
           {error && (

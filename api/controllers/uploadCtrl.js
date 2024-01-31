@@ -5,6 +5,8 @@ import pagination from "../middlewares/pagination.js";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
+import dotenv from "dotenv"
+dotenv.config()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 export const uploadImage = asyncHandler(async (req, res) => {
@@ -54,8 +56,8 @@ export const deleteImage = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const img = await imageModel.findByPk(id);
   if (!img) throw customError("عکس مورد نظر یافت نشد !", 404);
-  const nameImg = img.url.replace("public/images/", "");
-  const directory = path.join(__dirname, `../public/images/${nameImg}`);
+  const nameImg = img.url.replace(process.env.URL_SAVE_IMAGE, "");
+  const directory = path.join(__dirname, `${process.env.URL_IMAGE_WWW}${nameImg}`);
   try {
     fs.unlink(directory, async (err) => {
       if (err) {
@@ -72,7 +74,7 @@ export const deleteImage = asyncHandler(async (req, res) => {
   }
 });
 export const getAllFileImage = asyncHandler(async (req, res) => {
-  const directory = path.join(__dirname, "../public/images");
+  const directory = path.join(__dirname, process.env.URL_IMAGE_WWW);
   fs.readdir(directory, (err, url) => {
     if (err) {
       throw customError("خطایی رخ داده لطفا دوباره تلاش کنید", 400);

@@ -1,70 +1,55 @@
-import nextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-export const handler = nextAuth({
+import NextAuth from "next-auth/next";
+import CredentialsProviders from "next-auth/providers/credentials";
+
+const handler = NextAuth({
   providers: [
-    CredentialsProvider({
-      name: "login",
+    CredentialsProviders({
+      name: "sign up",
       credentials: {
-        phone: {
-          type: "text",
-        },
-        password: {
-          type: "password",
-        },
-        name: {
-          type: "text",
-        },
-        email: {
-          type: "text",
-        },
-        login: {
-          type: "text",
-        },
+        phone: { type: "text" },
+        password: { type: "password" },
+        email: { type: "text" },
+        name: { type: "text" },
+        login: { type: "text" }
       },
-      async authorize(credentials: any, req) {
-        let body = {};
-        if (credentials.login === "true") {
-          body = {
-            phone: credentials?.phone,
-            password: credentials?.password,
-          };
-          const login = await fetch(
-            process.env.NEXT_PUBLIC_URL_API + "/user/login",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(body),
-            }
-          );
-          if (!login.ok) return null;
-          const gog = await login.json();
-          if (gog.infoUser) {
-            return gog.infoUser;
-          }
-          return null;
+      async authorize(credentials, req) {
+        if (!credentials?.password || !credentials?.phone) return null;
+        let url: string = ""
+        let body: {
+          phone: string
+          password: string
+          email: string | null
+          name: string | null
+        } = {
+          phone: "",
+          password: "",
+          email: "",
+          name: "",
         }
-        if (credentials.login !== "true") {
-          body = {
-            phone: credentials?.phone,
-            name: credentials?.name,
-            password: credentials?.password,
-            email: credentials?.email,
-          };
-          const user = await fetch(process.env.NEXT_PUBLIC_URL_API + "/user", {
+        try {
+          if (credentials?.login === "false") {
+            url = `${process.env.NEXT_PUBLIC_URL_API}/user`
+            body.phone = credentials.phone
+            body.email = credentials?.email
+            body.name = credentials.name
+            body.password = credentials.password
+          } else {
+            url = `${process.env.NEXT_PUBLIC_URL_API}/user/login`
+            body.phone = credentials.phone
+            body.password = credentials.password
+          }
+          const res = await fetch(url, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(body),
           });
-          if (!user.ok) return null;
-          const gog = await user.json();
-          if (gog.infoUser) {
-            return gog.infoUser;
-          }
-          return null;
+          if (!res.ok) throw new Error();
+          const json = await res.json();
+          return json?.infoUser || null;
+        } catch (err) {
+          return null
         }
       },
     }),
@@ -73,14 +58,23 @@ export const handler = nextAuth({
     signIn: "/login",
   },
   secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
   callbacks: {
     async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
       return token;
     },
-    async session({ session, token, user }) {
-      session.user = token;
+    async session({ session, token }) {
+      if (token && token.user) {
+        session.user = token.user;
+      }
       return session;
     },
   },
 });
+
 export { handler as GET, handler as POST };
