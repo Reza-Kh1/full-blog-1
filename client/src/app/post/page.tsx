@@ -25,7 +25,7 @@ const getData = async ({ searchParams }: PostPage) => {
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 86000 },
+    next: { revalidate: 10 },
   });
   const data = await res.json();
   return data;

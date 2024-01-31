@@ -14,7 +14,7 @@ const getData = async (slug: { slug: string }) => {
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 864000 },
+    next: { revalidate: 10 },
   });
   if (!res.ok) {
     notFound();

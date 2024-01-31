@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/footer/page";
 import Header from "@/components/header/page";
-import Provider from "./provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const metadata: Metadata = {
@@ -19,11 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en" dir="rtl">
       <body>
-        <Provider>
-          <Header />
-          <div className="mx-auto max-w-7xl">{children}</div>
-          <Footer />
-        </Provider>
+        <Header />
+        <div className="mx-auto max-w-7xl">{children}</div>
+        <Footer />
         <ToastContainer />
       </body>
     </html>

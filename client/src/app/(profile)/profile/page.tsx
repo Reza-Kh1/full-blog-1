@@ -1,33 +1,34 @@
 "use client";
-import { signOut } from "next-auth/react";
-import { notFound, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 export default function Profile() {
-  const { data }: any = useSession();
+  const [user, serUser] = useState<string | null>()
   const router = useRouter();
+  const signOut = () => {
+    localStorage.setItem("user-info", "")
+    router.replace("/");
+  }
   useEffect(() => {
-    if (!data) router.replace("/");
-  }, [true]);
+    const gog = localStorage.getItem("user-info")
+    // if (!gog) {
+    //   router.replace("/");
+    // }
+    serUser(gog)
+    console.log(gog);
+  }, []);
   return (
     <>
       <div>profile</div>
       <span
         className="cursor-pointer "
-        onClick={() =>
-          signOut({ redirect: false })
-            .then(() => {
-              router.replace("/");
-            })
-            .catch(() => console.log("error"))
-        }
+        onClick={signOut}
       >
         Sign Out
       </span>
-      <span className="block">{data?.user?.email}</span>
+      {/* <span className="block">{data?.user?.email}</span>
       <span className="block">{data?.user?.name}</span>
       <span className="block">{data?.user?.phone}</span>
-      <span className="block">{data?.user?.role}</span>
+      <span className="block">{data?.user?.role}</span> */}
     </>
   );
 }

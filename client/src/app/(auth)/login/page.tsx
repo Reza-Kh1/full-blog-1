@@ -1,11 +1,12 @@
 "use client";
-import { signIn } from "next-auth/react";
 import SubmitButton from "@/components/submitButton/page";
 import { useState } from "react";
 import BtnLogin from "../btnLogin";
+import { useRouter } from "next/navigation";
 export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [isLogin, setIsLogin] = useState<"signUp" | "login">("login");
+  const router = useRouter()
   const onSubmit = async (e: FormData) => {
     const passwordReply = e.get("password-reply");
     const password = e.get("password");
@@ -17,15 +18,20 @@ export default function Login() {
     const email = e.get("email");
     const phone = e.get("phone");
     const login = passwordReply ? false : true
-    await signIn("credentials", {
-      name,
-      email,
-      password,
+    const body = {
       phone,
-      login,
-      redirect: true,
-      callbackUrl: "/",
-    });
+      password
+    }
+    const res = await fetch(process.env.NEXT_PUBLIC_URL_API + "/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body)
+    })
+    const json = await res.json()
+    localStorage.setItem("user-info", json.infoUser.token)
+    router.push("/")
   };
   return (
     <>

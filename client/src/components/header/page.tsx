@@ -8,7 +8,7 @@ const getData = async () => {
     headers: {
       ContentType: "application/json",
     },
-    next: { revalidate: 864000 },
+    next: { revalidate: 10 },
   });
   return await res.json();
 };
