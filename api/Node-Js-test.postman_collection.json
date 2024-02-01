@@ -1,0 +1,824 @@
+{
+	"info": {
+		"_postman_id": "c56af1b9-970a-4ee1-874a-395ddf995e4f",
+		"name": "Node-Js-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27124581"
+	},
+	"item": [
+		{
+			"name": "Legister & Login",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\":\"rezakhani\",\r\n    \"email\":\"r.khani\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"r.khani\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTcyNzc4MjAsImV4cCI6MTY5ODE0MTgyMH0.e5xBCYHOpc7tRPRUK1fBoRmKMCE7oK_5J7EzWC-XnS4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"honor 50\",\r\n    \"description\": \"its sooo good\",\r\n    \"brand\": \"honor\",\r\n    \"category\": \"6533ef46daeaafab2cec319f\",\r\n    \"sizes\": \"M\",\r\n    \"colors\": \"blue\",\r\n    \"price\": 18000,\r\n    \"totalQty\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/product/create",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTcyNzc4MjAsImV4cCI6MTY5ODE0MTgyMH0.e5xBCYHOpc7tRPRUK1fBoRmKMCE7oK_5J7EzWC-XnS4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/product?page=1&price=10000-200000",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "price",
+									"value": "10000-200000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/product?page=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/product/652d1d5da80f5cb5eaf18e17",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"652d1d5da80f5cb5eaf18e17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTc4OTc3MDksImV4cCI6MTY5ODc2MTcwOX0.e6iEIc8JuMDXp7gRhGCOmL8R0nxvGXFrqeS1_LbQimU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/product/6530e6457bbfd93e29cacbff",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"6530e6457bbfd93e29cacbff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"google pixel\",\r\n    \"price\": 450000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/product/652a698aca123490cb11ae24",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"652a698aca123490cb11ae24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTc4OTc3MDksImV4cCI6MTY5ODc2MTcwOX0.e6iEIc8JuMDXp7gRhGCOmL8R0nxvGXFrqeS1_LbQimU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"phone\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/category",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTc4OTc3MDksImV4cCI6MTY5ODc2MTcwOX0.e6iEIc8JuMDXp7gRhGCOmL8R0nxvGXFrqeS1_LbQimU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"6533dd52426a3e8b98a85a70\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/category",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/category",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"phone\",\r\n    \"productId\":\"652a6a7b58b9db331096b050\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/category/",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Create new Reviews",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"its good\",\r\n    \"user\": \"652a653fa6a93247a5dac0c0\",\r\n    \"product\": \"652a6a7b58b9db331096b050\",\r\n    \"score\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/reviews",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "isCheck",
+								"value": "true",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/reviews?isCheck=false&page=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "isCheck",
+									"value": "false"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/reviews/65376b4c8b9586113a61a5d7",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reviews",
+								"65376b4c8b9586113a61a5d7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Reviews",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/reviews",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Reviews ",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"so fucking bad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/reviews/653770e9a8859716d8fd86d2",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"reviews",
+								"653770e9a8859716d8fd86d2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTkxOTMwNDgsImV4cCI6MTcwMDA1NzA0OH0.fB4cidNCtyoYDL6dpGiu3Jr344m9KUtl5kg9Sx8i0eg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/order",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTgyNTg3NTMsImV4cCI6MTY5OTEyMjc1M30.kfOrWp9gh33QkCwI8MVYLBAq3ID7_5HDifeCR_5UIto",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order\": {\r\n        \"_id\": \"652a6a7b58b9db331096b050\",\r\n        \"totalQty\": 9\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/order",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/order/652a653fa6a93247a5dac0",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"652a653fa6a93247a5dac0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTgyNTg3NTMsImV4cCI6MTY5OTEyMjc1M30.kfOrWp9gh33QkCwI8MVYLBAq3ID7_5HDifeCR_5UIto",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/order/652a653fa6a93247a5dac0c0",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"652a653fa6a93247a5dac0c0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTgyNTg3NTMsImV4cCI6MTY5OTEyMjc1M30.kfOrWp9gh33QkCwI8MVYLBAq3ID7_5HDifeCR_5UIto",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/order/652d1d6fa80f5cb5eaf18e19",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order",
+								"652d1d6fa80f5cb5eaf18e19"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Coupon",
+			"item": [
+				{
+					"name": "Create Coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTgyNTg3NTMsImV4cCI6MTY5OTEyMjc1M30.kfOrWp9gh33QkCwI8MVYLBAq3ID7_5HDifeCR_5UIto",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"GOAP8\",\r\n    \"endDate\":90,\r\n    \"numberUse\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/coupon",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coupon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiNjUyYTY1M2ZhNmE5MzI0N2E1ZGFjMGMwIiwiZW1haWwiOiJyLmtoYW5pIiwibmFtZSI6InJlemFraGFuaSJ9LCJpYXQiOjE2OTkxOTM0NDIsImV4cCI6MTcwMDA1NzQ0Mn0.tHTnO1ljyOhL43okPqoE14acLnCbdrpxQY9hdxhUiMU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/coupon",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coupon"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Coupon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/coupon/65465d4c02735d35045bb020",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coupon",
+								"65465d4c02735d35045bb020"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Coupon",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/coupon/65466529c67795569a207ecc",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coupon",
+								"65466529c67795569a207ecc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Coupon",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "//اختیاری\r\n{\r\n    \"code\":\"Gooz\",\r\n    \"endDate\":2,\r\n    \"numberUse\":20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/coupon/65466e536edac84366b5ac89",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coupon",
+								"65466e536edac84366b5ac89"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Use Coupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idProduct\":\"6546721b185d298966c9db8f\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/coupon/Gooz",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"coupon",
+								"Gooz"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": []
+		}
+	]
+}
